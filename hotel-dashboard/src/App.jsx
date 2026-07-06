@@ -186,7 +186,10 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/hotels/');
+      // Bypasses local development server proxies by pointing directly to the live server
+      const targetUrl = 'https://demohotelsapi.pythonanywhere.com/hotels/';
+      const response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl));
+
       if (!response.ok) throw new Error('Failed to retrieve fresh hotel listings.');
       const data = await response.json();
       const hotelList = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
@@ -203,10 +206,6 @@ export default function App() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchHotels();
-  }, []);
 
   // Performance-optimized live filtering logic
   const filteredHotels = useMemo(() => {
