@@ -186,9 +186,7 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      // Bypasses local development server proxies by pointing directly to the live server
-      const targetUrl = 'https://demohotelsapi.pythonanywhere.com/hotels/';
-      const response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl));
+      const response = await fetch('/api/hotels');
 
       if (!response.ok) throw new Error('Failed to retrieve fresh hotel listings.');
       const data = await response.json();
